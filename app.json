@@ -2,7 +2,7 @@
   "id": "cd966e33-bdbb-4ab8-989f-ef28ac7e9086",
   "name": "Meridian Operations",
   "publisher": "Meridian Equipment Ltd",
-  "version": "1.0.0.0",
+  "version": "1.0.0.1",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -16,8 +16,8 @@
   "application": "28.5.0.0",
   "idRanges": [
     {
-      "from": 50100,
-      "to": 50199
+      "from": 51899,
+      "to": 51999
     }
   ],
   "resourceExposurePolicy": {
