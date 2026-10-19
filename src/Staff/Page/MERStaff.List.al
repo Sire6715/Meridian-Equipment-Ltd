@@ -4,6 +4,7 @@ page 51902 "MER Staff List"
     ApplicationArea = All;
     UsageCategory = Administration;
     SourceTable = "MER Staff";
+    CardPageId = "MER Staff Card";
 
     layout
     {

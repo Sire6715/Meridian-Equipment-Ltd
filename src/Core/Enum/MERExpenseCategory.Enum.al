@@ -1,10 +1,6 @@
 enum 51908 "MER Expense Category"
 {
     Extensible = true;
-
-    value(0; Category)
-    {
-    }
     value(1; Travel)
     {
     }

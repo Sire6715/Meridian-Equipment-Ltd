@@ -8,12 +8,13 @@
             "environmentType": "Sandbox",
             "environmentName": "ASSL_Test",
             "tenant": "dbd487a8-a464-4bc6-8eb9-8e7c54bedecf",
-            "startupObjectId": 22,
+            "startupObjectId": 51899,
             "startupObjectType": "Page",
             "breakOnError": "All",
             "launchBrowser": true,
             "enableLongRunningSqlStatements": true,
-            "enableSqlInformationDebugger": true
+            "enableSqlInformationDebugger": true,
+            "schemaUpdateMode": "ForceSync"
         }
     ]
 }

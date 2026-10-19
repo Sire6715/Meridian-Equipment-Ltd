@@ -4,6 +4,7 @@ table 51911 "MER Staff"
     Caption = 'MER Staff';
     DataPerCompany = true;
 
+
     fields
     {
         field(1; "No."; Code[20])
@@ -45,10 +46,12 @@ table 51911 "MER Staff"
         {
             Caption = 'Staff Phone Number';
             ExtendedDatatype = PhoneNo;
+            DataClassification = EndUserIdentifiableInformation;
         }
         field(7; "Birth Date"; Date)
         {
             Caption = 'Birth Date';
+            DataClassification = EndUserIdentifiableInformation;
         }
         field(8; "Manager No."; Code[20])
         {
@@ -56,13 +59,13 @@ table 51911 "MER Staff"
             TableRelation = "MER Staff"."No.";
             trigger OnValidate()
             begin
-                if "Manager No." = Rec."No." then Error('A staff member cannot be their own manager.');
+                ValidateManagerNo();
             end;
         }
         field(9; "User ID"; Code[50])
         {
             Caption = 'User ID';
-            TableRelation = "User"."User Name";
+            TableRelation = User."User Name";
         }
         field(10; "Blocked"; Boolean)
         {
@@ -99,6 +102,55 @@ table 51911 "MER Staff"
         Rec.Name := DelChr(Rec."First Name" + ' ' + Rec."Last Name", '<>', ' ');
     end;
 
+    local procedure ValidateManagerNo()
+    var
+        Manager: Record "MER Staff";
+        ManagerNo: Code[20];
+        VisitedManagerNos: List of [Code[20]];
+    begin
+        ManagerNo := "Manager No.";
+        while ManagerNo <> '' do begin
+            if ManagerNo = "No." then
+                Error('A staff member cannot be their own manager, either directly or through the manager hierarchy.');
+
+            if VisitedManagerNos.Contains(ManagerNo) then
+                Error('The manager hierarchy contains a circular reference.');
+
+            VisitedManagerNos.Add(ManagerNo);
+            if not Manager.Get(ManagerNo) then
+                exit;
+
+            ManagerNo := Manager."Manager No.";
+        end;
+    end;
+
+    local procedure GetNextApprover(): Code[20]
+    var
+        Manager: Record "MER Staff";
+        ManagerNo: Code[20];
+        VisitedManagerNos: List of [Code[20]];
+    begin
+        ManagerNo := "Manager No.";
+        While ManagerNo <> '' do begin
+
+            if ManagerNo = "No." then
+                Error('A staff member cannot be their own manager, either directly or through the manager hierarchy.');
+
+            if VisitedManagerNos.Contains(ManagerNo) then
+                Error('The manager hierarchy contains a circular reference.');
+
+            VisitedManagerNos.Add(ManagerNo);
+
+            if not Manager.Get(ManagerNo) then
+                exit('');
+
+            if not Manager.Blocked then
+                exit(ManagerNo);
+
+            ManagerNo := Manager."Manager No.";
+        end;
+    end;
+
     trigger OnInsert()
     var
         MERSetup: Record "MER Setup";
@@ -107,7 +159,8 @@ table 51911 "MER Staff"
         if Rec."No." = '' then begin
             MERSetup.Get();
             MERSetup.TestField("Staff No.");
-            Rec."No." := NoSeries.GetNextNo("MERSetup"."Staff No.", WorkDate(), true)
+            Rec."No." := "MERSetup"."Staff No.";
+            Rec."No." := NoSeries.GetNextNo(Rec."No.", WorkDate(), true)
         end;
     end;
 }

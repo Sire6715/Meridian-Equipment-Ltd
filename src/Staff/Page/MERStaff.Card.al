@@ -84,4 +84,29 @@ page 51900 "MER Staff Card"
             }
         }
     }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(SendMessage)
+            {
+                Caption = 'Send Message';
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Process;
+                ToolTip = 'Send a message to Staff.';
+
+                trigger OnAction()
+                var
+                // Message: Codeunit "Email Message";
+                // Email: CodeUnit Email;
+                begin
+                    // Message.Create(Rec."E-mail", StrSubstNo('Hello %1', Rec.Name), 'How''re you doing today?');
+                    // Email.Send(Message);
+                    Message(StrSubstNo('Hello %1', Rec.Name));
+                end;
+            }
+        }
+    }
 }

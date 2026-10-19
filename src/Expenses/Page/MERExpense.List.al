@@ -1,10 +1,12 @@
-page 51901 "MER Expense List"
+page 51903 "MER Expense List"
 {
-    ApplicationArea = All;
-    Caption = 'MER Expense List';
     PageType = List;
-    UsageCategory = Lists;
-    SourceTable = "MER Expense Table";
+    Caption = 'MER Expense List';
+    SourceTable = "MER Expense Header";
+    ApplicationArea = All;
+    UsageCategory = Administration;
+    CardPageId = "MER Expense";
+    Editable = false;
 
     layout
     {
@@ -29,25 +31,25 @@ page 51901 "MER Expense List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the date the expense was incurred.';
                 }
-                field(Category; Rec.Category)
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the category of the expense.';
-                }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies a description of the expense.';
                 }
-                field(Amount; Rec.Amount)
+                field("Shortcut Dimension 2 Code"; Rec."Shortcut Dimension 2 Code")
+                {
+                    Caption = 'Project';
+                    ApplicationArea = Dimensions;
+                    ToolTip = 'Specifies the code for Shortcut Dimension.';
+                }
+                field("Total Amount"; Rec."Total Amount")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the amount of the expense.';
+                    ToolTip = 'Specifies the total amount of the expense lines.';
                 }
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
-                    Editable = Rec.Status <> Rec.Status::"Pending Approval";
                     ToolTip = 'Specifies the approval status of the expense.';
                 }
                 field(Posted; Rec.Posted)

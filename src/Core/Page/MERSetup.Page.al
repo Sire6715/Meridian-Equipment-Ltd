@@ -11,9 +11,9 @@ page 51909 "MER Setup"
     {
         area(Content)
         {
-            group(General)
+            group(Approval)
             {
-                Caption = 'General';
+                Caption = 'Approval';
                 field("Approval Enabled"; Rec."Approval Enabled")
                 {
                     Caption = 'Approval Enabled';
@@ -32,6 +32,56 @@ page 51909 "MER Setup"
                     ToolTip = 'Expense Above this Triggers approval';
                     ApplicationArea = All;
                 }
+                field("Fallback Approver ID"; Rec."Fallback Approver ID")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the user to use as the fallback approver.';
+                }
+            }
+
+            group(Expenses)
+            {
+                Caption = 'Expenses';
+                field("Project Dimension"; Rec."Project Dimension")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies which dimension represents projects.';
+                }
+                field("Project Dimension Code"; Rec."Project Dimension Code")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the project dimension code.';
+                }
+                field("Require Project On Expense"; Rec."Require Project on Lines")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies whether an expense line must include a project value.';
+                }
+            }
+
+            group("Expense Posting")
+            {
+                Caption = 'Expense Posting';
+                field("Expense Balancing G/L Acc. No."; Rec."Expense Balancing G/L Acc. No.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the G/L account used to balance expense postings.';
+                }
+                field("Expense Journal Template"; Rec."Expense Journal Template")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the journal template used for expense postings.';
+                }
+                field("Expense Journal Batch"; Rec."Expense Journal Batch")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the journal batch used for expense postings.';
+                }
+            }
+
+            group(Notifications)
+            {
+                Caption = 'Notifications';
                 field("Warranty Notice Days"; Rec."Warranty Notice Days")
                 {
                     Caption = 'Warranty Notice Days';
